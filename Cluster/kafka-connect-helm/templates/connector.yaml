@@ -1,0 +1,18 @@
+{{- if .Values.deployOnlyConnector }}
+
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: {{ .Values.connector.name }}
+  namespace: {{ .Values.connect.namespace }}
+spec:
+  connectClusterRef:
+    name: {{ .Values.connector.connectorClusterRef }}
+  class: {{ index .Values.connector.config.connector.class }}
+  taskMax: {{ index .Values.connector.config.tasks.max | int }}
+  configs:
+    kafka.topic: {{ .Values.connector.config.kafka.topic | quote}}
+    quickstart: {{ .Values.connector.config.quickstart | quote }}
+    max.interval: {{ .Values.connector.config.max.interval | quote}}
+    iterations: {{ .Values.connector.config.iterations | quote}}
+{{- end }}

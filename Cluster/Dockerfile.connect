@@ -1,0 +1,17 @@
+FROM confluentinc/cp-server-connect:7.8.0
+
+# Create a new plugins directory
+USER root
+RUN mkdir -p /kafka/connect-plugins/datagen
+
+# Copy your Datagen connector JARs
+COPY datagen/ /kafka/connect-plugins/datagen/
+
+# Set correct permissions
+RUN chown -R appuser:appuser /kafka/connect-plugins
+
+# Switch back to appuser (as expected by Confluent image)
+USER appuser
+
+# Set plugin.path env var (used by Connect)
+ENV CONNECT_PLUGIN_PATH="/usr/share/java,/kafka/connect-plugins"

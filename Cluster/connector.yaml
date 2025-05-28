@@ -1,0 +1,15 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: datagen-source-connector
+  namespace: default
+spec:
+  connectClusterRef:
+    name: connect       # <-- This tells CFK which Connect cluster to target
+  class: io.confluent.kafka.connect.datagen.DatagenConnector
+  taskMax: 1
+  configs:
+    kafka.topic: datagen-topic
+    quickstart: users
+    max.interval: "1000"
+    iterations: "1000000"

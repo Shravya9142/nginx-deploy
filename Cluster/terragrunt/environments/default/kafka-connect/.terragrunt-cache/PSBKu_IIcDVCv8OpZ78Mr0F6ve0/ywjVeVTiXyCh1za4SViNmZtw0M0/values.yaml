@@ -1,0 +1,26 @@
+connect:
+  name: connect-helm-only
+  namespace: default
+  image:
+    application: shravya9142/cp-server-connect:7.8.0-datagen
+    init: confluentinc/confluent-init-container:2.10.0
+  kafka:
+    bootstrapEndpoint: "my-kafka:9092"
+  configOverrides:
+    server:
+      - "plugin.path=/usr/share/java,/kafka/connect-plugins,/kafka/connect-plugins/datagen"
+
+connector:
+  name: datagen-source-connector
+  connectorClusterRef: connect-helm-only
+  config:
+    connector:
+      class: io.confluent.kafka.connect.datagen.DatagenConnector
+    tasks:
+      max: 1
+    kafka:
+      topic: datagen-topic
+    quickstart: users
+    max:
+      interval: "1000"
+    iterations: "1000000"

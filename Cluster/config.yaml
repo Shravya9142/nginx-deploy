@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: config
+  namespace: confluent
+type: Opaque
+stringData:
+  client.properties: |
+    security.protocol=SASL_PLAINTEXT
+    sasl.mechanism=PLAIN
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="connect" password="connect-secret" user_connect="connect-secret";

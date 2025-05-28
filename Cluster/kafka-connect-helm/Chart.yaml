@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kafka-connect-helm
+description: A Helm chart for Kafka Connect and connectors
+version: 0.1.0
